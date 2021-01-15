@@ -1,0 +1,11 @@
+<section class="home">
+  <div *ngIf="(payment$ | async).paymentAmount !== 0">
+    <h2>Last payment:</h2>
+    <h3>{{ (payment$ | async).creditCardNumber }}</h3>
+    <h3>{{ (payment$ | async).creditCardHolder }}</h3>
+    <h3>{{ (payment$ | async).expirationDate | date: 'YYYY/MM/dd' }}</h3>
+    <h3>{{ (payment$ | async).securityCode }}</h3>
+    <h3>{{ (payment$ | async).paymentAmount }}</h3>
+  </div>
+  <h2 *ngIf="(payment$ | async).paymentAmount === 0">Angular 11</h2>
+</section>
