@@ -10,11 +10,7 @@ export const initialPayment : payment = {
   paymentAmount : 0
 };
 
-const _paymentReducer = createReducer(initialPayment, 
+export const reducer = createReducer(initialPayment, 
   on(action.clearPayment, () => initialPayment),
-  on(action.setPayment, (state, { pay }) => pay)  
+  on(action.setPayment, (state, { pay }) => pay)
 );
-
-export const paymentReducer = (state, action) => {
-  return _paymentReducer(state, action);
-}

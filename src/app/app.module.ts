@@ -4,11 +4,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavigatorComponent } from './navigator/navigator.component';
 import { HomeComponent } from './components/home/home.component';
-import { RESTapiService } from './services/restapi.service';
-import { PaymentService } from './services/payment.service';
-import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
-import { paymentReducer } from './store/payment.reducer';
+import { reducers } from './store';
 import { PaymentComponent } from './components/payment/payment.component';
 import { FormsModule } from '@angular/forms';
 
@@ -22,11 +19,10 @@ import { FormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
     FormsModule,
-    StoreModule.forRoot({ pay : paymentReducer})
+    StoreModule.forRoot(reducers)
   ],
-  providers: [RESTapiService, PaymentService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

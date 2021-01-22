@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { payment, payResults, validateFields, validPayment } from 'src/app/models/payment';
 import * as action from '../../store/payment.actions';
 import { toCorrectDate } from '../../models/date';
-import { PaymentService } from '../../services/payment.service';
 
 @Component({
   selector: 'app-payment',
@@ -14,7 +13,7 @@ import { PaymentService } from '../../services/payment.service';
 })
 export class PaymentComponent implements OnInit {
   public payment$ : Observable<payment>;
-  paymentForm : payment = {
+  public paymentForm : payment = {
     creditCardNumber : '',
     creditCardHolder : '',
     expirationDate : new Date(),
@@ -26,12 +25,11 @@ export class PaymentComponent implements OnInit {
     expirationDate : true, securityCode : true,
     paymentAmount : true
   }
-  inputDate : string = '';
+  public inputDate : string = '';
 
   constructor(
     private router : Router, 
-    private store : Store<{ pay : payment }>, 
-    private API : PaymentService
+    private store : Store<{ pay : payment }>
   ) {}  
   
   ccNumberChanged = (e) => {
@@ -53,20 +51,8 @@ export class PaymentComponent implements OnInit {
   handleClick = () => {
     this.isValid = validateFields(this.paymentForm);
     if(validPayment(this.isValid)) {
-      this.API.sendPayment(this.paymentForm).subscribe(
-        res => {
-          console.info(res);
-          this.store.dispatch(action.setPayment({ pay : this.paymentForm }));
-          this.router.navigateByUrl('/');
-        },
-        err => {
-          console.log(err);
-          this.store.dispatch(action.setPayment({ pay : this.paymentForm }));
-        }
-      )
-    }
-    else {
-      console.log('Validations: ',this.isValid);
+      this.store.dispatch(action.setPayment({ pay : this.paymentForm }));
+      this.router.navigateByUrl('/');
     }
   }
   ngOnInit(): void {
