@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
-import { PaymentComponent } from './components/payment/payment.component';
+import { WumpusComponent } from './components/wumpus/wumpus.component';
 const routes: Routes = [
   {
     path : '',
@@ -9,10 +9,9 @@ const routes: Routes = [
     pathMatch : 'full',
   },
   {
-    path : 'payment',
-    component : PaymentComponent
+    path : 'wumpus',
+    component : WumpusComponent
   }
-
 ];
 
 @NgModule({

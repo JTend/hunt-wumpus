@@ -6,15 +6,15 @@ import { NavigatorComponent } from './navigator/navigator.component';
 import { HomeComponent } from './components/home/home.component';
 import { StoreModule } from '@ngrx/store';
 import { reducers } from './store';
-import { PaymentComponent } from './components/payment/payment.component';
 import { FormsModule } from '@angular/forms';
+import { WumpusComponent } from './components/wumpus/wumpus.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigatorComponent,
     HomeComponent,
-    PaymentComponent
+    WumpusComponent
   ],
   imports: [
     BrowserModule,

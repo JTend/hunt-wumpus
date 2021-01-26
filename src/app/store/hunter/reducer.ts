@@ -1,7 +1,7 @@
-import { Action, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import * as action from './actions';
 import Hunter from '../../models/hunter';
-import Coordenada from '../../models/coordenada';
+import Coordinate from '../../models/coordinate';
 import * as dir from '../../models/directions';
 
 export const initialState : Hunter = {
@@ -11,10 +11,10 @@ export const initialState : Hunter = {
 }
 
 export const reducer = createReducer(initialState, 
-  on(action.iniciarHunter, ( state, { hunter } ) => hunter),
+  on(action.iniciarHunter, ( state, { hunter } ) : Hunter => hunter),
 
-  on(action.avanzarPosicion, state => {
-    let newPosition : Coordenada = state.position;
+  on(action.avanzarPosicion, (state) : Hunter => {
+    let newPosition : Coordinate = state.position;
     switch(state.direction) {
       case dir.RIGHT: newPosition.X++; break;
       case dir.LEFT : newPosition.X--; break;
@@ -27,7 +27,7 @@ export const reducer = createReducer(initialState,
     }
   }),
 
-  on(action.girarIzquierda, state => {
+  on(action.girarIzquierda, (state) : Hunter => {
     let newdir : string = state.direction;
     switch(state.direction) {
       case dir.UP   : newdir = dir.LEFT;  break;
@@ -41,7 +41,7 @@ export const reducer = createReducer(initialState,
     }
   }),
 
-  on(action.girarDerecha, state => {
+  on(action.girarDerecha, (state) : Hunter => {
     let newdir : string = state.direction;
     switch(state.direction) {
       case dir.UP:      newdir = dir.RIGHT; break;
@@ -55,7 +55,7 @@ export const reducer = createReducer(initialState,
     }
   }),
 
-  on(action.dispararFlecha, state => {
+  on(action.dispararFlecha, (state) : Hunter => {
     let payload = (state.arrows > 0) ? 1 : 0;
     return {
       ...state,

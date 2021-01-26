@@ -1,7 +1,7 @@
-import Coordenada from './coordenada';
+import Coordinate from './coordinate';
 
 export default interface Hunter {
-  position : Coordenada;
+  position : Coordinate;
   direction : string;
   arrows : number;
 }
