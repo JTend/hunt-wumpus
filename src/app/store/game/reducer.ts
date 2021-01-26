@@ -12,12 +12,13 @@ export const initialState : Game = {
   feelWumpus : false,
   feelWall : false,
   strikedWall : false,
-  strikedWumpus : false
+  strikedWumpus : false,
+  goldIsTaken : false,
+  wumpusIsAlive : true
 }
 
 export const reducer = createReducer(initialState, 
   on(action.initGame, (state, { size, holes }) : Game => ({
-      ...state,
       board : new Board(size, holes),
       deadByHole : false,
       deadByWumpus : false,
@@ -26,7 +27,9 @@ export const reducer = createReducer(initialState,
       feelWumpus : false,
       feelWall : false,
       strikedWall : false,
-      strikedWumpus : false
+      strikedWumpus : false,
+      goldIsTaken : false,
+      wumpusIsAlive : true
   })),
   on(action.tryMoving, (state, { cell }) : Game => {
     return {
@@ -35,24 +38,25 @@ export const reducer = createReducer(initialState,
     }
   }),
   on(action.moveHunter, (state, { cell }) : Game => {
-    if(state.board.isGoldCell(cell)) state.board.gold.isTaken = true;
     return {
       ...state,
       deadByHole : state.board.isHoleCell(cell),
-      deadByWumpus : state.board.isWumpusCell(cell),
-      feelGold : state.board.feelingGold(cell),
-      feelHole : state.board.feelingGold(cell),
+      deadByWumpus : !state.wumpusIsAlive ? false : state.board.isWumpusCell(cell),
+      feelGold : state.goldIsTaken ? false : state.board.feelingGold(cell),
+      feelHole : state.board.feelingHole(cell),
       feelWumpus : state.board.feelingWumpus(cell),
       strikedWall : false,
-      strikedWumpus : false
+      strikedWumpus : false,
+      goldIsTaken : state.goldIsTaken ? true : state.board.isGoldCell(cell)
     }
   }),
-  on(action.shootArrow, (state, { orig, dire }) : Game => {
+  on(action.dispararFlecha, (state, { orig, dire }) : Game => {
     const killedWumpus = state.board.shootArrow(orig, dire);
     return {
       ...state,
       strikedWall : !killedWumpus,
-      strikedWumpus : killedWumpus
+      strikedWumpus : killedWumpus,
+      wumpusIsAlive : killedWumpus ? false : state.wumpusIsAlive
     }
   })
 );

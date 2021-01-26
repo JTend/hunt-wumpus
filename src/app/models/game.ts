@@ -10,4 +10,6 @@ export default interface Game {
   feelWall : boolean;
   strikedWall : boolean;
   strikedWumpus : boolean;
+  goldIsTaken : boolean;
+  wumpusIsAlive : boolean;
 }

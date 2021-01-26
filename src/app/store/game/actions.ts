@@ -10,4 +10,4 @@ export const tryMoving  = createAction('TRY_MOVING', props<{cell : Coordinate}>(
 
 export const moveHunter = createAction('MOVE_HUNTER', props<{cell : Coordinate}>() );
 
-export const shootArrow = createAction('SHOOT_ARROW', props<{orig : Coordinate, dire : string}>() );
+export const dispararFlecha = createAction('SHOOT_ARROW', props<{orig : Coordinate, dire : string}>() );

@@ -1,14 +1,22 @@
 <section class="home">
-  <div *ngIf="(payment$ | async).paymentAmount !== 0">
-    <h2>Last payment:</h2>
-    <h3>{{ (payment$ | async).creditCardNumber }}</h3>
-    <h3>{{ (payment$ | async).creditCardHolder }}</h3>
-    <h3>{{ (payment$ | async).expirationDate | date: 'YYYY/MM/dd' }}</h3>
-    <h3>{{ (payment$ | async).securityCode }}</h3>
-    <h3>{{ (payment$ | async).paymentAmount }}</h3>
-  </div>
-  <div>
-    <h2 *ngIf="(hunter$ | async)">Arrows:  {{(hunter$ | async).arrows}} </h2>
-    <h2 *ngIf="(payment$ | async).paymentAmount === 0">Angular 11</h2>
-  </div>
+  <form (ngSubmit)="iniciarPartida()">
+    <h2>Configurar nuevo juego:</h2>
+    <div>
+      <label for="ancho">Ancho del campo:</label>
+      <input type="number" name="ancho" min="4" max="100" [(ngModel)]="ancho">
+    </div>
+    <div>
+      <label for="alto">Alto del campo:</label>
+      <input type="number" name="alto" min="4" max="100" [(ngModel)]="alto">
+    </div>
+    <div>
+      <label for="holes">Pozos presentes:</label>
+      <input type="number" name="holes" min="3" max="100" [(ngModel)]="nroPozos">
+    </div>
+    <div>
+      <label for="arrows">Flechas disponibles:</label>
+      <input type="number" name="arrows" min="3" max="10" [(ngModel)]="nroFlechas">
+    </div>
+    <button type="submit">Start game</button>
+  </form>
 </section>

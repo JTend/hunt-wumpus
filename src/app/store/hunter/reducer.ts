@@ -14,7 +14,7 @@ export const reducer = createReducer(initialState,
   on(action.iniciarHunter, ( state, { hunter } ) : Hunter => hunter),
 
   on(action.avanzarPosicion, (state) : Hunter => {
-    let newPosition : Coordinate = state.position;
+    let newPosition : Coordinate = { X: state.position.X, Y: state.position.Y };
     switch(state.direction) {
       case dir.RIGHT: newPosition.X++; break;
       case dir.LEFT : newPosition.X--; break;

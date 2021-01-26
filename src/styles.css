@@ -71,31 +71,38 @@ a:hover {
 
 .home > * {
   display: inline-block;
-  margin-top : 25vh;
+  margin-top : 10vh;
 }
 
-.payment {
+.wumpus {
   animation : softEntry;
   animation-duration: 1.5s;
   vertical-align: middle;
   margin : 4vh; padding : 2.5vh;
-  background-color: rgba(255, 255, 255, 0.75);
+  background-color: rgba(255, 255, 255, 0.1);
   border-radius: 0.5rem;
 }
 
-.payment > * {
-  width: 50%; display: inline-block;
+.wumpus > * {
+  width: 33%; display: inline-block;
   margin : 0; padding : 0;
   border-radius : 0.5rem;
+  text-align: center;
+  vertical-align: top;
 }
 
-.payment > form > div > button {
+.hunter > img { width: 75%; height: auto;}
+.hunter > img.RIGHT { transform : rotate(90deg); }
+.hunter > img.DOWN { transform : rotate(180deg); }
+.hunter > img.LEFT { transform : rotate(270deg); }
+
+.home > form > div > button {
   width : 85%; padding : 0.5rem;
   margin : 0.5rem 0; border-radius: 0.5rem;
   background-color: darkcyan;
 }
 
-.payment > form > div > input {
+.home > form > div > input {
   padding : 0.5rem; width : 80%;
   border-radius: 0.5rem; margin : 0.5rem 0;
 }
@@ -108,7 +115,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 input[type=number] { -moz-appearance:textfield; }
 
-.payment > form > div > label {
+.home > form > div > label {
   padding : 0.5rem; width : 10%;
   border-radius: 0.5rem; margin : 0.5rem 0;
 }
@@ -133,7 +140,7 @@ nav > button:disabled {
 }
 
 h1 {
-  font-size: 4rem;
+  font-size: 2rem;
 }
 
 @media only screen and (max-width : 500px) {

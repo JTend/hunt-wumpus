@@ -1,1 +1,46 @@
-<p>wumpus works!</p>
+<section class="wumpus">
+  <div>
+    <h4>Campo: {{ $game.board.size.X }} x {{ $game.board.size.Y }}</h4>
+    <h4>Pozos: {{ $game.board.holes.length }}</h4>
+    <h4>Arrows: {{ $hunter.arrows }}</h4>
+  </div>
+  <div class="hunter" *ngIf="!($game.deadByHole || $game.deadByWumpus) && !($game.goldIsTaken && $hunter.position.X === 0 && $hunter.position.Y === 0)">
+    <img [class]="$hunter.direction" [src]="$hunter.arrows === 0 ? '../../../assets/hunter.png' : '../../../assets/hunter_arrow.png'" alt="hunter_image">
+    <div>
+      <h4>
+        <button class="left" (click)="girarIzquierda()">Izq</button>
+        <button class="move" (click)="avanzar()">Avanza</button>
+        <button class="right" (click)="girarDerecha()">Der</button>
+      </h4>
+    </div>
+    <div>
+      <button (click)="disparar()">Disparar</button>
+    </div>
+    <div>
+      <h4 *ngIf="!$game.goldIsTaken">Consigue el oro!</h4>
+      <h4 *ngIf="$game.goldIsTaken">Regresa al inicio!</h4>
+    </div>
+  </div>
+  <div *ngIf="$game.deadByHole || $game.deadByWumpus">
+    <h4>Has perdido</h4>
+    <button (click)="goHome()">&lt;Regresar</button>
+  </div>
+  <div *ngIf="$game.goldIsTaken && $hunter.position.X === 0 && $hunter.position.Y === 0">
+    <h4>¡Enhorabuena! <br/> ¡has ganado!</h4>
+    <button (click)="goHome()">&lt;Regresar</button>
+  </div>
+  <div>
+    <h4>Percepción: </h4>
+    <ul>
+      <li *ngIf="$game.goldIsTaken">¡Ya tienes el Oro!</li>
+      <li *ngIf="$game.deadByHole">Has caído en un pozo</li>
+      <li *ngIf="$game.deadByWumpus">Te ha matado el wumpus</li>
+      <li *ngIf="$game.feelWumpus">Sientes el olor del wumpus</li>
+      <li *ngIf="$game.feelHole">Sientes la corriente de un pozo</li>
+      <li *ngIf="$game.feelGold">¡Aprecias el brillo del Oro!</li>
+      <li *ngIf="$game.feelWall">Has chocado con la pared</li>
+      <li *ngIf="$game.strikedWall">La flecha ha llegado a la pared</li>
+      <li *ngIf="$game.strikedWumpus">¡La flecha ha impactado al wumpus!</li>
+    </ul>
+  </div>
+</section>

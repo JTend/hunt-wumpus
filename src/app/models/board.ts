@@ -3,31 +3,31 @@ import * as dir from './directions';
 
 export default class Board {
   size : Coordinate;
-  wumpus : { position : Coordinate, isAlive : boolean };
-  gold : { position : Coordinate, isTaken : boolean };
+  wumpus : Coordinate;
+  gold : Coordinate;
   holes : Array<Coordinate>;
 
   constructor(size : Coordinate, numberOfHoles : number) {
     this.size = size;
-    this.gold = { position : this.uniqueLocation(), isTaken : false };
-    this.wumpus = { position : this.uniqueLocation(), isAlive : true };
+    this.gold = this.uniqueLocation();
+    this.wumpus = this.uniqueLocation();
     this.holes = [];
     for(let i = 0; i<numberOfHoles; i++) this.holes.push(this.uniqueLocation());
   }
 
   private randomLocation = () : Coordinate => {
     if(this.size) {
-      let x : number = Math.floor(Math.random() * (this.size.X - 2)) + 2;
-      let y : number = Math.floor(Math.random() * (this.size.Y - 2)) + 2;
+      let x : number = Math.floor(Math.random() * (this.size.X - 1)) + 1;
+      let y : number = Math.floor(Math.random() * (this.size.Y - 1)) + 1;
       return { X : x, Y : y };
     }
     else return null;
   }
 
   private uniqueLocation = () : Coordinate => {
-    const arrayWithWumpusAndGold = [];
+    const arrayWithWumpusAndGold : Array<Coordinate> = [];
     if(this.gold) arrayWithWumpusAndGold.push(this.gold);
-    if(this.wumpus) arrayWithWumpusAndGold.push(this.wumpus.position);
+    if(this.wumpus) arrayWithWumpusAndGold.push(this.wumpus);
     if(this.holes) this.holes.forEach(item => arrayWithWumpusAndGold.push(item));
     const newLocation = this.randomLocation();
     if(arrayWithWumpusAndGold.some( item => item.X === newLocation.X && item.Y === newLocation.Y) )
@@ -36,11 +36,10 @@ export default class Board {
   }
 
   public feelingGold(hunter : Coordinate) : boolean {
-    if(this.gold.isTaken) return false;
-    if(hunter.X === this.gold.position.X && hunter.Y === (this.gold.position.Y + 1)) return true;
-    if(hunter.X === (this.gold.position.X + 1) && hunter.Y === this.gold.position.Y) return true;
-    if(hunter.X === this.gold.position.X && hunter.Y === (this.gold.position.Y - 1)) return true;
-    if(hunter.X === (this.gold.position.X - 1) && hunter.Y === this.gold.position.Y) return true;
+    if(hunter.X === this.gold.X && hunter.Y === (this.gold.Y + 1)) return true;
+    if(hunter.X === (this.gold.X + 1) && hunter.Y === this.gold.Y) return true;
+    if(hunter.X === this.gold.X && hunter.Y === (this.gold.Y - 1)) return true;
+    if(hunter.X === (this.gold.X - 1) && hunter.Y === this.gold.Y) return true;
     return false;
   }
   
@@ -55,20 +54,19 @@ export default class Board {
   }
   
   public feelingWumpus(hunter : Coordinate) : boolean {
-    if(!this.wumpus.isAlive) return false;
-    if(hunter.X === this.wumpus.position.X && hunter.Y === (this.wumpus.position.Y + 1)) return true;
-    if(hunter.X === (this.wumpus.position.X + 1) && hunter.Y === this.wumpus.position.Y) return true;
-    if(hunter.X === this.wumpus.position.X && hunter.Y === (this.wumpus.position.Y - 1)) return true;
-    if(hunter.X === (this.wumpus.position.X - 1) && hunter.Y === this.wumpus.position.Y) return true;
+    if(hunter.X === this.wumpus.X && hunter.Y === (this.wumpus.Y + 1)) return true;
+    if(hunter.X === (this.wumpus.X + 1) && hunter.Y === this.wumpus.Y) return true;
+    if(hunter.X === this.wumpus.X && hunter.Y === (this.wumpus.Y - 1)) return true;
+    if(hunter.X === (this.wumpus.X - 1) && hunter.Y === this.wumpus.Y) return true;
     return false;
   }
 
   public isGoldCell(hunter : Coordinate) : boolean {
-    return hunter.X === this.gold.position.X && hunter.Y === this.gold.position.Y && !this.gold.isTaken;
+    return hunter.X === this.gold.X && hunter.Y === this.gold.Y;
   }
 
   public isWumpusCell(hunter : Coordinate) : boolean {
-    return hunter.X === this.wumpus.position.X && hunter.Y === this.wumpus.position.Y && this.wumpus.isAlive;
+    return hunter.X === this.wumpus.X && hunter.Y === this.wumpus.Y;
   }
 
   public isHoleCell(hunter : Coordinate) : boolean {
@@ -83,33 +81,20 @@ export default class Board {
     switch(direction) {
       case dir.UP:
         for(let i = origin.Y; i < this.size.Y; i++)
-          if(this.isWumpusCell({X:origin.X, Y:i})) {
-            this.wumpus.isAlive = false;
-            return true;
-          }
+          if(this.isWumpusCell({X:origin.X, Y:i})) return true;
         return false;
       case dir.DOWN:
         for(let i = origin.Y; i >= 0; i--)
-          if(this.isWumpusCell({X:origin.X, Y:i})) {
-            this.wumpus.isAlive = false;
-            return true;
-          }
+          if(this.isWumpusCell({X:origin.X, Y:i})) return true;
         return false;
       case dir.RIGHT:
         for(let i = origin.X; i < this.size.X; i++)
-          if(this.isWumpusCell({X:i, Y:origin.Y})) {
-            this.wumpus.isAlive = false;
-            return true;
-          }
+          if(this.isWumpusCell({X:i, Y:origin.Y})) return true;
         return false;
       case dir.LEFT:
         for(let i = origin.X; i >= 0; i--)
-          if(this.isWumpusCell({X:i, Y:origin.Y})) {
-            this.wumpus.isAlive = false;
-            return true;
-          }
+          if(this.isWumpusCell({X:i, Y:origin.Y})) return true;
         return false;
     }
   }
-
 }

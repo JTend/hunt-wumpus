@@ -77,22 +77,22 @@ describe('Game Store:', () => {
     });//describe feelWall and tryMoving
     describe('Shooting arrows', () => {
       beforeEach(() => {
-        selectGameBoard(state).wumpus.isAlive = true;
+        selectGame(state).wumpusIsAlive = true;
       });
       it('strikedWumpus should be true and wumpus is not alive', () => {
-        state.game = fromGame.reducer(selectGame(state), action.shootArrow({
-          orig:{X:selectGameBoard(state).wumpus.position.X, Y:0}, 
+        state.game = fromGame.reducer(selectGame(state), action.dispararFlecha({
+          orig:{X:selectGameBoard(state).wumpus.X, Y:0}, 
           dire:dir.UP
         }));
-        expect(selectGameBoard(state).wumpus.isAlive).toBeFalse();
+        expect(selectGame(state).wumpusIsAlive).toBeFalse();
         expect(selectGame(state).strikedWumpus).toBeTrue();
       });
       it('strikedWumpus should be false and wumpus is alive', () => {
-        state.game = fromGame.reducer(selectGame(state), action.shootArrow({
-          orig:{X:0, Y:selectGameBoard(state).wumpus.position.Y}, 
+        state.game = fromGame.reducer(selectGame(state), action.dispararFlecha({
+          orig:{X:0, Y:selectGameBoard(state).wumpus.Y}, 
           dire:dir.UP
         }));
-        expect(selectGameBoard(state).wumpus.isAlive).toBeTrue();
+        expect(selectGame(state).wumpusIsAlive).toBeTrue();
         expect(selectGame(state).strikedWumpus).toBeFalse();
       });
     });//describe Shooting Arrows
